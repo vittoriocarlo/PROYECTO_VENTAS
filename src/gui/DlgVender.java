@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -25,12 +26,11 @@ public class DlgVender extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtCantidad;
+	private JTextField txtprecio;
 	private JScrollPane scrollPane;
 	private JTextArea txtS;
 	private JButton btnlimpiar;
-	private JButton btnVender;
-	private JComboBox cboModelo;
+	private JButton btnprocesar;
 	private JLabel lblNombreCliente;
 	private JTextField txtcantidad;
 	private JLabel lblPrecioUnitario;
@@ -42,6 +42,7 @@ public class DlgVender extends JDialog implements ActionListener {
 	private JPanel panel;
 	private JPanel panelcerrar;
 	private JLabel lblNewLabel_1;
+	private JTextField txtcodigo;
 
 	/**
 	 * Launch the application.
@@ -67,95 +68,112 @@ public class DlgVender extends JDialog implements ActionListener {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JLabel lblNewLabel = new JLabel("Modelo");
+			JLabel lblNewLabel = new JLabel("Codigo");
 			lblNewLabel.setFont(new Font("Fira Code", Font.PLAIN, 12));
 			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel.setBounds(20, 92, 92, 29);
+			lblNewLabel.setBounds(30, 60, 92, 29);
 			contentPanel.add(lblNewLabel);
-		}
-		{
-			cboModelo = new JComboBox();
-			cboModelo.setBounds(153, 93, 135, 21);
-			contentPanel.add(cboModelo);
 		}
 		{
 			JLabel lblCantidad = new JLabel("Cantidad");
 			lblCantidad.setHorizontalAlignment(SwingConstants.CENTER);
 			lblCantidad.setFont(new Font("Fira Code", Font.PLAIN, 12));
-			lblCantidad.setBounds(30, 166, 92, 29);
+			lblCantidad.setBounds(41, 138, 92, 29);
 			contentPanel.add(lblCantidad);
 		}
 		{
-			txtCantidad = new JTextField();
-			txtCantidad.setBounds(151, 131, 137, 21);
-			contentPanel.add(txtCantidad);
-			txtCantidad.setColumns(10);
-		}
-		{
-			btnVender = new JButton("Vender");
-			btnVender.addActionListener(this);
-			btnVender.setFont(new Font("Fira Code", Font.PLAIN, 12));
-			btnVender.setBounds(51, 231, 92, 34);
-			contentPanel.add(btnVender);
+			txtprecio = new JTextField();
+			txtprecio.setEditable(false);
+			txtprecio.setBounds(153, 100, 137, 21);
+			contentPanel.add(txtprecio);
+			txtprecio.setColumns(10);
 		}
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(41, 286, 628, 155);
+		scrollPane.setBounds(41, 245, 628, 196);
 		contentPanel.add(scrollPane);
 		
 		txtS = new JTextArea();
 		scrollPane.setColumnHeaderView(txtS);
 		txtS.setEditable(false);
+		
+		ImageIcon iconlimpiar = null;
+		ImageIcon iconprocesar = null;
+		
+		
+		try {
+            // Se escala a 20x20 para que entre bien en el botón
+            iconprocesar = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/procesar.png"))
+                .getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+            iconlimpiar = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/limpiar.png"))
+                .getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+        } catch (Exception e) {
+            System.out.println("Error: No se encontraron las imágenes en src/IMG/");
+        }
 		{
-			btnlimpiar = new JButton("Limpiar");
-			btnlimpiar.addActionListener(this);
-			btnlimpiar.setFont(new Font("Fira Code", Font.PLAIN, 12));
-			btnlimpiar.setBounds(178, 231, 92, 34);
-			contentPanel.add(btnlimpiar);
+			btnprocesar = new JButton("Procesar");
+			btnprocesar.setIcon(iconprocesar);
+			btnprocesar.addActionListener(this);
+			btnprocesar.setIconTextGap(10);
+	        btnprocesar.setFont(new Font("Fira Code", Font.PLAIN, 11));
+			btnprocesar.setBounds(41, 188, 120, 34);
+			contentPanel.add(btnprocesar);
 		}
+		
+		btnlimpiar = new JButton("Limpiar");
+		btnlimpiar.setIcon(iconlimpiar);
+		btnlimpiar.addActionListener(this);
+		btnlimpiar.setHorizontalTextPosition(SwingConstants.RIGHT); 
+        btnlimpiar.setIconTextGap(10);
+		btnlimpiar.setFont(new Font("Fira Code", Font.PLAIN, 11));
+		btnlimpiar.setBounds(168, 188, 120, 34);
+		contentPanel.add(btnlimpiar);
+		
 		
 		lblNombreCliente = new JLabel("Nombre cliente");
 		lblNombreCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreCliente.setFont(new Font("Fira Code", Font.PLAIN, 12));
-		lblNombreCliente.setBounds(321, 92, 113, 29);
+		lblNombreCliente.setBounds(321, 60, 113, 29);
 		contentPanel.add(lblNombreCliente);
 		
 		txtcantidad = new JTextField();
 		txtcantidad.setColumns(10);
-		txtcantidad.setBounds(153, 170, 137, 21);
+		txtcantidad.setBounds(153, 142, 137, 21);
 		contentPanel.add(txtcantidad);
 		
-		lblPrecioUnitario = new JLabel("Precio Unitario");
+		lblPrecioUnitario = new JLabel("Precio S/.");
 		lblPrecioUnitario.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrecioUnitario.setFont(new Font("Fira Code", Font.PLAIN, 12));
-		lblPrecioUnitario.setBounds(20, 131, 113, 29);
+		lblPrecioUnitario.setFont(new Font("Fira Code", Font.PLAIN, 11));
+		lblPrecioUnitario.setBounds(30, 99, 113, 29);
 		contentPanel.add(lblPrecioUnitario);
 		
 		txtnombrecliente = new JTextField();
 		txtnombrecliente.setColumns(10);
-		txtnombrecliente.setBounds(443, 92, 137, 21);
+		txtnombrecliente.setBounds(443, 64, 137, 21);
 		contentPanel.add(txtnombrecliente);
 		
 		lblStockActual = new JLabel("Stock");
 		lblStockActual.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStockActual.setFont(new Font("Fira Code", Font.PLAIN, 12));
-		lblStockActual.setBounds(321, 127, 113, 29);
+		lblStockActual.setFont(new Font("Fira Code", Font.PLAIN, 11));
+		lblStockActual.setBounds(321, 96, 113, 29);
 		contentPanel.add(lblStockActual);
 		
 		txtstock = new JTextField();
+		txtstock.setEditable(false);
 		txtstock.setColumns(10);
-		txtstock.setBounds(443, 131, 137, 21);
+		txtstock.setBounds(443, 100, 137, 21);
 		contentPanel.add(txtstock);
 		
 		lblDescripcin = new JLabel("Descripción");
 		lblDescripcin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDescripcin.setFont(new Font("Fira Code", Font.PLAIN, 12));
-		lblDescripcin.setBounds(321, 166, 113, 29);
+		lblDescripcin.setBounds(321, 138, 113, 29);
 		contentPanel.add(lblDescripcin);
 		
 		txtdescripcion = new JTextField();
+		txtdescripcion.setEditable(false);
 		txtdescripcion.setColumns(10);
-		txtdescripcion.setBounds(443, 171, 137, 21);
+		txtdescripcion.setBounds(443, 142, 137, 21);
 		contentPanel.add(txtdescripcion);
 		
 		panel = new JPanel();
@@ -210,6 +228,11 @@ public class DlgVender extends JDialog implements ActionListener {
 	    timer.start();
 		panelcerrar.add(lblNewLabel_1);
 		
+		txtcodigo = new JTextField();
+		txtcodigo.setColumns(10);
+		txtcodigo.setBounds(151, 64, 137, 21);
+		contentPanel.add(txtcodigo);
+		
 		
 	}
 	
@@ -222,8 +245,9 @@ public class DlgVender extends JDialog implements ActionListener {
 	}
 	protected void actionPerformedBtnlimpiar(ActionEvent e) {
 		//cboModelo.setSelectedIndex(0);
-		txtCantidad.setText("");
-		txtCantidad.requestFocus();
-		cboModelo.requestFocus();
+		txtcodigo.setText("");
+		txtprecio.setText("");
+		txtcodigo.requestFocus();
+		
 	}
 }

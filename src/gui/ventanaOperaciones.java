@@ -27,8 +27,8 @@ public class ventanaOperaciones extends JFrame implements ActionListener {
 	private JMenu mnConfiguracion;
 	private JMenu mnAyuda;
 	private JMenuItem mntmConsultar;
-	private JMenu mnArchivo;
-	private JMenuItem mntmSalir;
+	private JMenu mnreporte;
+	private JMenuItem mntmresumen;
 	private JMenuItem mntmModificar;
 	private JMenuItem mntmListar;
 	private JMenuItem mntmVender;
@@ -72,13 +72,14 @@ public class ventanaOperaciones extends JFrame implements ActionListener {
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		mnArchivo = new JMenu("Archivo");
-		mnArchivo.setFont(new Font("Fira Code", Font.PLAIN, 12));
-		menuBar.add(mnArchivo);
+		mnreporte = new JMenu("Reporte");
+		mnreporte.setFont(new Font("Fira Code", Font.PLAIN, 12));
+		menuBar.add(mnreporte);
 		
-		mntmSalir = new JMenuItem("Salir");
-		mntmSalir.setFont(new Font("Fira Code", Font.PLAIN, 12));
-		mnArchivo.add(mntmSalir);
+		mntmresumen = new JMenuItem("Resumen General");
+		mntmresumen.addActionListener(this);
+		mntmresumen.setFont(new Font("Fira Code", Font.PLAIN, 12));
+		mnreporte.add(mntmresumen);
 		
 		mnMatenimiento = new JMenu("Mantenimiento");
 		mnMatenimiento.setFont(new Font("Fira Code", Font.PLAIN, 12));
@@ -159,6 +160,9 @@ public class ventanaOperaciones extends JFrame implements ActionListener {
 
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == mntmresumen) {
+			actionPerformedMntmresumen(e);
+		}
 		if (e.getSource() == mntmAcercaDe) {
 			actionPerformedMntmAcercaDe(e);
 		}
@@ -217,5 +221,10 @@ public class ventanaOperaciones extends JFrame implements ActionListener {
 		DlgAcercade ac = new DlgAcercade();
 		ac.setLocationRelativeTo(this);
 		ac.setVisible(true);
+	}
+	protected void actionPerformedMntmresumen(ActionEvent e) {
+		DlgResumen re = new DlgResumen();
+		re.setLocationRelativeTo(this);
+		re.setVisible(true);
 	}
 }

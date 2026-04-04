@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -25,7 +26,7 @@ public class DlgListar extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JScrollPane scrollPane;
-	private JButton btnNewButton;
+	private JButton btnlistar;
 	private JTable table;
 	private int xMouse, yMouse;
 	private JPanel panel;
@@ -67,7 +68,7 @@ public class DlgListar extends JDialog implements ActionListener {
 			new Object[][] {
 			},
 			new String[] {
-				"Descripci\u00F3n", "Modelo", "Talla", "Stock", "Precio (S/.)"
+				"Codigo", "Precio", "Talla", "Stock", "Descripcion", "Color", "Proveedor"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(99);
@@ -75,12 +76,38 @@ public class DlgListar extends JDialog implements ActionListener {
 		table.getColumnModel().getColumn(2).setMinWidth(20);
 		table.getColumnModel().getColumn(4).setPreferredWidth(100);
 		scrollPane.setViewportView(table);
+
 		
-		btnNewButton = new JButton("Listar");
-		btnNewButton.addActionListener(this);
-		btnNewButton.setFont(new Font("Fira Code", Font.BOLD, 12));
-		btnNewButton.setBounds(302, 77, 119, 30);
-		contentPanel.add(btnNewButton);
+		// modificamos cabecera
+		table.getTableHeader().setFont(new Font("Fira Code", Font.PLAIN, 11));
+		
+		// centramos los titulos
+		((javax.swing.table.DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer())
+		    .setHorizontalAlignment(SwingConstants.CENTER);
+		
+		// (Opcional) Si quieres que las letras de ADENTRO de la tabla no sean tan gruesas
+		table.setFont(new Font("Fira Code", Font.PLAIN, 12));
+		// --- AQUÍ TERMINA ---
+
+		ImageIcon iconList = null;
+        
+        try {
+            // Se escala a 20x20 para que entre bien en el botón
+            iconList = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/listar.png"))
+                .getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+            
+        } catch (Exception e) {
+            System.out.println("Error: No se encontraron las imágenes en src/IMG/");
+        }
+		
+		btnlistar = new JButton("Listar");
+		btnlistar.setIcon(iconList);
+		btnlistar.addActionListener(this);
+		btnlistar.setHorizontalTextPosition(SwingConstants.RIGHT); 
+        btnlistar.setIconTextGap(10);
+		btnlistar.setFont(new Font("Fira Code", Font.PLAIN, 11));
+		btnlistar.setBounds(302, 77, 119, 30);
+		contentPanel.add(btnlistar);
 		
 		panel = new JPanel();
 		panel.setLayout(null);
@@ -115,7 +142,7 @@ public class DlgListar extends JDialog implements ActionListener {
 		    @Override
 		    public void mouseExited(java.awt.event.MouseEvent e) {
 		        
-		        lblNewLabel.setForeground(java.awt.Color.BLACK);
+		        lblNewLabel.setForeground(java.awt.Color.WHITE);
 		    }
 		});
 		
@@ -139,7 +166,7 @@ public class DlgListar extends JDialog implements ActionListener {
 	
 	
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnNewButton) {
+		if (e.getSource() == btnlistar) {
 			actionPerformedBtnNewButton(e);
 		}
 	}

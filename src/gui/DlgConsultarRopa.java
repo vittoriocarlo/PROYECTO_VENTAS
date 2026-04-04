@@ -30,7 +30,6 @@ public class DlgConsultarRopa extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JLabel lblNewLabel;
-	private JComboBox cboModelo;
 	private JLabel lblPrecioS;
 	private JTextField txtPrecio;
 	private JButton btnlimpiar;
@@ -51,6 +50,7 @@ public class DlgConsultarRopa extends JDialog implements ActionListener {
 	private int xMouse, yMouse;
 	private JLabel lblProveedor;
 	private JTextField textField;
+	private JTextField txtcodigo;
 
 	/**
 	 * Launch the application.
@@ -79,15 +79,11 @@ public class DlgConsultarRopa extends JDialog implements ActionListener {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		lblNewLabel = new JLabel("Modelo");
+		lblNewLabel = new JLabel("Codigo");
 		lblNewLabel.setFont(new Font("Fira Code", Font.PLAIN, 12));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(31, 59, 70, 33);
 		contentPanel.add(lblNewLabel);
-		
-		cboModelo = new JComboBox();
-		cboModelo.setBounds(163, 65, 125, 21);
-		contentPanel.add(cboModelo);
 		
 		lblPrecioS = new JLabel("Precio S/.");
 		lblPrecioS.setHorizontalAlignment(SwingConstants.CENTER);
@@ -101,11 +97,7 @@ public class DlgConsultarRopa extends JDialog implements ActionListener {
 		contentPanel.add(txtPrecio);
 		txtPrecio.setColumns(10);
 		
-		btnlimpiar = new JButton("Limpiar");
-		btnlimpiar.addActionListener(this);
-		btnlimpiar.setFont(new Font("Fira Code", Font.PLAIN, 12));
-		btnlimpiar.setBounds(187, 380, 101, 33);
-		contentPanel.add(btnlimpiar);
+		
 		
 		lblTalla = new JLabel("Talla");
 		lblTalla.setHorizontalAlignment(SwingConstants.CENTER);
@@ -143,11 +135,37 @@ public class DlgConsultarRopa extends JDialog implements ActionListener {
 		txtDescripcion.setBounds(163, 237, 125, 21);
 		contentPanel.add(txtDescripcion);
 		
-		btnConsultar = new JButton("Consultar");
-		btnConsultar.setFont(new Font("Fira Code", Font.PLAIN, 12));
-		btnConsultar.setBounds(31, 380, 116, 33);
-		contentPanel.add(btnConsultar);
+		ImageIcon iconCons = null;
+        ImageIcon iconLimp = null;
+        try {
+            // Se escala a 20x20 para que entre bien en el botón
+            iconCons = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/consultar.png"))
+                .getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+            iconLimp = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/limpiar.png"))
+                .getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+        } catch (Exception e) {
+            System.out.println("Error: No se encontraron las imágenes en src/IMG/");
+        }
 		
+        btnConsultar = new JButton("Consultar");
+        btnConsultar.setIcon(iconCons);
+        
+        btnConsultar.setHorizontalTextPosition(SwingConstants.RIGHT); 
+        btnConsultar.setIconTextGap(10);
+        btnConsultar.setFont(new Font("Fira Code", Font.PLAIN, 11));
+        btnConsultar.setBounds(31, 380, 124, 33); 
+        contentPanel.add(btnConsultar);
+		
+        btnlimpiar = new JButton("Limpiar");
+        btnlimpiar.setIcon(iconLimp);
+        btnlimpiar.addActionListener(this);
+        btnlimpiar.setHorizontalTextPosition(SwingConstants.RIGHT); 
+        btnlimpiar.setIconTextGap(10);
+        btnlimpiar.setFont(new Font("Fira Code", Font.PLAIN, 11));
+        btnlimpiar.setBounds(190, 380, 124, 33); 
+        contentPanel.add(btnlimpiar);
+        
+        
 		lblColor = new JLabel("Color");
 		lblColor.setHorizontalAlignment(SwingConstants.CENTER);
 		lblColor.setFont(new Font("Fira Code", Font.PLAIN, 12));
@@ -210,6 +228,11 @@ public class DlgConsultarRopa extends JDialog implements ActionListener {
 		textField.setBounds(163, 324, 125, 21);
 		contentPanel.add(textField);
 		
+		txtcodigo = new JTextField();
+		txtcodigo.setColumns(10);
+		txtcodigo.setBounds(163, 66, 125, 21);
+		contentPanel.add(txtcodigo);
+		
 		lblNewLabel_1.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -263,6 +286,9 @@ public class DlgConsultarRopa extends JDialog implements ActionListener {
 	
 	
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnConsultar) {
+			actionPerformedBtnConsultar(e);
+		}
 		if (e.getSource() == btnlimpiar) {
 			actionPerformedBtnNewButton(e);
 		}
@@ -274,7 +300,9 @@ public class DlgConsultarRopa extends JDialog implements ActionListener {
 		txtStock.setText("");
 		txtDescripcion.setText("");
 		txtcolor.setText("");
-		cboModelo.requestFocus();
+		txtcodigo.requestFocus();
 		
+	}
+	protected void actionPerformedBtnConsultar(ActionEvent e) {
 	}
 }
