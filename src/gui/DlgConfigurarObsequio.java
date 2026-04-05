@@ -22,13 +22,13 @@ import javax.swing.JCheckBox;
 import java.awt.Graphics;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import javax.swing.JComboBox;
 
 public class DlgConfigurarObsequio extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JLabel lblNewLabel;
-	private JTextField txtObsequio;
 	private JLabel lblCantidadMinima;
 	private JTextField txtCantidadMinima;
 	private JButton btnconfirmar;
@@ -38,6 +38,7 @@ public class DlgConfigurarObsequio extends JDialog implements ActionListener {
 	private JPanel panelcerrar;
 	private JLabel lblNewLabel_1;
 	private int xMouse, yMouse;
+	private JComboBox cboObsequio;
 
 	/**
 	 * Launch the application.
@@ -61,8 +62,7 @@ public class DlgConfigurarObsequio extends JDialog implements ActionListener {
 		setBounds(100, 100, 748, 459);
 		getContentPane().setLayout(new BorderLayout());
 		
-		// 1. QUITAMOS EL BORDE BLANCO (TitledBorder/EtchedBorder)
-		// Dejamos que FlatLaf decida el fondo y borde según el tema actual
+		
 		contentPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -70,23 +70,18 @@ public class DlgConfigurarObsequio extends JDialog implements ActionListener {
 		lblNewLabel = new JLabel("Tipo Obsequio:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Fira Code", Font.PLAIN, 12));
-		lblNewLabel.setBounds(10, 66, 110, 39);
+		lblNewLabel.setBounds(19, 115, 110, 39);
 		contentPanel.add(lblNewLabel);
 		
-		txtObsequio = new JTextField();
-		txtObsequio.setBounds(158, 74, 172, 24);
-		contentPanel.add(txtObsequio);
-		txtObsequio.setColumns(10);
-		
-		lblCantidadMinima = new JLabel("Cantidad Minima");
+		lblCantidadMinima = new JLabel("Importe mínimo");
 		lblCantidadMinima.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCantidadMinima.setFont(new Font("Fira Code", Font.PLAIN, 12));
-		lblCantidadMinima.setBounds(10, 115, 110, 39);
+		lblCantidadMinima.setBounds(19, 66, 110, 39);
 		contentPanel.add(lblCantidadMinima);
 		
 		txtCantidadMinima = new JTextField();
 		txtCantidadMinima.setColumns(10);
-		txtCantidadMinima.setBounds(158, 120, 172, 24);
+		txtCantidadMinima.setBounds(158, 74, 172, 24);
 		contentPanel.add(txtCantidadMinima);
 		
 		ImageIcon iconconfirmar = null;
@@ -153,8 +148,11 @@ public class DlgConfigurarObsequio extends JDialog implements ActionListener {
 		lblNewLabel_1.setBounds(0, 0, 54, 33);
 		panelcerrar.add(lblNewLabel_1);
 		
-		// Lógica de cerrado y movimiento (Sin colores manuales para no romper FlatLaf)
-		// Lógica de cerrado con estilo limpio
+		cboObsequio = new JComboBox();
+		cboObsequio.setBounds(156, 124, 174, 20);
+		contentPanel.add(cboObsequio);
+		
+		
 				lblNewLabel_1.addMouseListener(new java.awt.event.MouseAdapter() {
 					@Override
 					public void mouseClicked(java.awt.event.MouseEvent e) { 
@@ -162,14 +160,12 @@ public class DlgConfigurarObsequio extends JDialog implements ActionListener {
 					}
 					@Override
 					public void mouseEntered(java.awt.event.MouseEvent e) {
-						// En lugar de rojo, podemos usar un color que resalte sutilmente 
-						// o simplemente dejar que FlatLaf maneje el hover si fuera un botón.
-						// Aquí solo cambiaremos el color del texto a blanco brillante.
+						
 						lblNewLabel_1.setForeground(Color.WHITE);
 					}
 					@Override
 					public void mouseExited(java.awt.event.MouseEvent e) {
-						// Volver al color por defecto del tema FlatLaf
+						
 						lblNewLabel_1.setForeground(null); 
 					}
 				});
@@ -177,18 +173,21 @@ public class DlgConfigurarObsequio extends JDialog implements ActionListener {
 		panel_1.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mousePressed(java.awt.event.MouseEvent e) {
-				xMouse = e.getX(); yMouse = e.getY();
+				xMouse = e.getX(); 
+				yMouse = e.getY();
 			}
 		});
 		
 		panel_1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
 			@Override
 			public void mouseDragged(java.awt.event.MouseEvent e) {
-				setLocation(e.getXOnScreen() - xMouse, e.getYOnScreen() - yMouse);
+				int x = e.getXOnScreen();
+		        int y = e.getYOnScreen();
+		        setLocation(x - xMouse, y - yMouse);
 			}
 		});
 		
-		// Animación de entrada (opcional, si te da problemas quítala)
+		
 		Timer timer = new Timer(15, e -> {
 			float opacity = getOpacity() + 0.05f;
 			if (opacity > 1f) { setOpacity(1f); ((Timer)e.getSource()).stop(); }
@@ -196,6 +195,11 @@ public class DlgConfigurarObsequio extends JDialog implements ActionListener {
 		});
 		setOpacity(0f);
 		timer.start();
+		
+		String[] listaPremios = {"Seleccione ", "Gorrita Pro", "Tomatodo", "Pack de medias"};
+		for(String premio : listaPremios) {
+			cboObsequio.addItem(premio);
+		}
 	}
 	
 	
@@ -205,8 +209,8 @@ public class DlgConfigurarObsequio extends JDialog implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtnCancelar(ActionEvent e) {
-		txtObsequio.setText("");
+		cboObsequio.setSelectedIndex(0);
 		txtCantidadMinima.setText("");
-		txtObsequio.requestFocus();
+		cboObsequio.requestFocus();
 	}
 }

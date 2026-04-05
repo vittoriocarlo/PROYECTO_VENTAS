@@ -43,6 +43,9 @@ public class DlgVender extends JDialog implements ActionListener {
 	private JPanel panelcerrar;
 	private JLabel lblNewLabel_1;
 	private JTextField txtcodigo;
+	private int xMouse, yMouse;
+	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_3;
 
 	/**
 	 * Launch the application.
@@ -133,7 +136,7 @@ public class DlgVender extends JDialog implements ActionListener {
 		lblNombreCliente = new JLabel("Nombre cliente");
 		lblNombreCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreCliente.setFont(new Font("Fira Code", Font.PLAIN, 12));
-		lblNombreCliente.setBounds(321, 60, 113, 29);
+		lblNombreCliente.setBounds(349, 60, 113, 29);
 		contentPanel.add(lblNombreCliente);
 		
 		txtcantidad = new JTextField();
@@ -149,31 +152,31 @@ public class DlgVender extends JDialog implements ActionListener {
 		
 		txtnombrecliente = new JTextField();
 		txtnombrecliente.setColumns(10);
-		txtnombrecliente.setBounds(443, 64, 137, 21);
+		txtnombrecliente.setBounds(472, 64, 137, 21);
 		contentPanel.add(txtnombrecliente);
 		
 		lblStockActual = new JLabel("Stock");
 		lblStockActual.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStockActual.setFont(new Font("Fira Code", Font.PLAIN, 11));
-		lblStockActual.setBounds(321, 96, 113, 29);
+		lblStockActual.setBounds(349, 96, 113, 29);
 		contentPanel.add(lblStockActual);
 		
 		txtstock = new JTextField();
 		txtstock.setEditable(false);
 		txtstock.setColumns(10);
-		txtstock.setBounds(443, 100, 137, 21);
+		txtstock.setBounds(472, 100, 137, 21);
 		contentPanel.add(txtstock);
 		
 		lblDescripcin = new JLabel("Descripción");
 		lblDescripcin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDescripcin.setFont(new Font("Fira Code", Font.PLAIN, 12));
-		lblDescripcin.setBounds(321, 138, 113, 29);
+		lblDescripcin.setBounds(349, 138, 113, 29);
 		contentPanel.add(lblDescripcin);
 		
 		txtdescripcion = new JTextField();
 		txtdescripcion.setEditable(false);
 		txtdescripcion.setColumns(10);
-		txtdescripcion.setBounds(443, 142, 137, 21);
+		txtdescripcion.setBounds(472, 142, 137, 21);
 		contentPanel.add(txtdescripcion);
 		
 		panel = new JPanel();
@@ -232,6 +235,68 @@ public class DlgVender extends JDialog implements ActionListener {
 		txtcodigo.setColumns(10);
 		txtcodigo.setBounds(151, 64, 137, 21);
 		contentPanel.add(txtcodigo);
+		
+		
+		ImageIcon iconDescuentoEscalado = new ImageIcon(new ImageIcon("src/IMG/icondescuento.png")
+		    .getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+
+		ImageIcon iconRegaloEscalado = new ImageIcon(new ImageIcon("src/IMG/iconregalo.png")
+		    .getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+
+		lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER); 
+		lblNewLabel_2.setIcon(iconDescuentoEscalado); 
+		lblNewLabel_2.setBounds(343, 188, 70, 34);
+		contentPanel.add(lblNewLabel_2);
+		lblNewLabel_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
+		lblNewLabel_2.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				DlgConfigurarDescuentos vDesc = new DlgConfigurarDescuentos();
+				vDesc.setModal(true); 
+				vDesc.setLocationRelativeTo(null); 
+				vDesc.setVisible(true);
+			}
+		});
+
+		lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setIcon(iconRegaloEscalado); 
+		lblNewLabel_3.setBounds(438, 188, 70, 34);
+		contentPanel.add(lblNewLabel_3);
+		lblNewLabel_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
+		lblNewLabel_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblNewLabel_3.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				DlgConfigurarObsequio vObs = new DlgConfigurarObsequio();
+				vObs.setModal(true);
+				vObs.setLocationRelativeTo(null);
+				vObs.setVisible(true);
+			}
+		});
+		
+		
+		
+		panel.addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mousePressed(java.awt.event.MouseEvent e) {
+		        xMouse = e.getX(); 
+		        yMouse = e.getY(); 
+		    }
+		});
+
+		panel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+		    @Override
+		    public void mouseDragged(java.awt.event.MouseEvent e) {
+		        int x = e.getXOnScreen();
+		        int y = e.getYOnScreen();
+		        
+		        setLocation(x - xMouse, y - yMouse);
+		    }
+		});
 		
 		
 	}

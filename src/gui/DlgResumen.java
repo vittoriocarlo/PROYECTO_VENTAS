@@ -20,7 +20,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 
-// Agregamos "implements ActionListener" para que el "this" funcione
+
 public class DlgResumen extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -43,14 +43,14 @@ public class DlgResumen extends JFrame implements ActionListener {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			} // <-- Te faltaba esta llave
-		}); // <-- Te faltaba este paréntesis
+			} 
+		}); 
 	}
 
 	public DlgResumen() {
 		setUndecorated(true);
-		// Si quieres que se vea el FlatLaf, recuerda que el main debe tener el setup
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Mejor use DISPOSE para subventanas
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
 		setBounds(100, 100, 850, 559);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -85,7 +85,7 @@ public class DlgResumen extends JFrame implements ActionListener {
 		contentPane.add(btndescargar);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 108, 850, 441); 
+		scrollPane.setBounds(10, 108, 830, 441); 
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -97,7 +97,7 @@ public class DlgResumen extends JFrame implements ActionListener {
 		));
 		
 		scrollPane.setViewportView(table);
-		table.setFillsViewportHeight(true); // Para que se vea blanco hasta el fondo
+		table.setFillsViewportHeight(true); 
 		
 		table.getTableHeader().setFont(new Font("Fira Code", Font.PLAIN, 11));
 		
@@ -177,7 +177,7 @@ public class DlgResumen extends JFrame implements ActionListener {
 	    timer.start();
 	}
 
-	// MÉTODO OBLIGATORIO PARA LOS BOTONES
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnmostrar) {

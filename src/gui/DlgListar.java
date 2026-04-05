@@ -58,7 +58,7 @@ public class DlgListar extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 125, 699, 357);
+		scrollPane.setBounds(10, 125, 750, 372);
 		contentPanel.add(scrollPane);
 		
 		table = new JTable();
@@ -85,9 +85,9 @@ public class DlgListar extends JDialog implements ActionListener {
 		((javax.swing.table.DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer())
 		    .setHorizontalAlignment(SwingConstants.CENTER);
 		
-		// (Opcional) Si quieres que las letras de ADENTRO de la tabla no sean tan gruesas
+		
 		table.setFont(new Font("Fira Code", Font.PLAIN, 12));
-		// --- AQUÍ TERMINA ---
+		
 
 		ImageIcon iconList = null;
         

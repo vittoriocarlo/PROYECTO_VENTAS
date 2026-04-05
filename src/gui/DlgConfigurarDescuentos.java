@@ -31,18 +31,17 @@ public class DlgConfigurarDescuentos extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
 	private JLabel lblNewLabel;
 	private JLabel lblA_1;
-	private JLabel lblA;
 	private JLabel lblMasDe;
-	private JTextField txtporcentaje3;
-	private JTextField txtporcentaje4;
+	private JTextField txtvalortotal;
 	private JButton btnconfirmar;
 	private JButton btnlimpiar;
-	private JTextField txtporcentaje2;
-	private JTextField txtporcentaje1;
+	private JTextField txtdescuento;
+	private JTextField txtmonto;
 	private JPanel panel;
 	private JPanel panelcerrar;
 	private JLabel lblNewLabel_1;
 	private JPanel panel_1;
+	private int xMouse, yMouse;
 
 	/**
 	 * Launch the application.
@@ -70,50 +69,42 @@ public class DlgConfigurarDescuentos extends JDialog implements ActionListener {
 	    getContentPane().add(contentPanel, BorderLayout.CENTER);
 	    contentPanel.setLayout(null);
 
-	    // =========================
-	    // 🟢 PANEL IZQUIERDO (FORM)
-	    // =========================
 	    JPanel panelIzquierdo = new JPanel();
 	    panelIzquierdo.setBounds(0, 0, 350, 459);
 	    panelIzquierdo.setLayout(null);
 	    panelIzquierdo.setPreferredSize(new Dimension(350, 0));
 	    contentPanel.add(panelIzquierdo);
 
-	    lblNewLabel = new JLabel("3 a 5 unidades:");
+	    lblNewLabel = new JLabel("Monto");
+	    lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 	    lblNewLabel.setFont(new Font("Fira Code Light", Font.PLAIN, 12));
-	    lblNewLabel.setBounds(10, 68, 130, 30);
+	    lblNewLabel.setBounds(20, 50, 130, 30);
 	    panelIzquierdo.add(lblNewLabel);
 
-	    lblA = new JLabel("6 a 10 unidades:");
-	    lblA.setFont(new Font("Fira Code", Font.PLAIN, 12));
-	    lblA.setBounds(10, 108, 130, 30);
-	    panelIzquierdo.add(lblA);
-
-	    lblA_1 = new JLabel("11 a 15 unidades:");
+	    lblA_1 = new JLabel("Descuento");
+	    lblA_1.setHorizontalAlignment(SwingConstants.CENTER);
 	    lblA_1.setFont(new Font("Fira Code", Font.PLAIN, 12));
-	    lblA_1.setBounds(10, 148, 130, 30);
+	    lblA_1.setBounds(20, 90, 130, 30);
 	    panelIzquierdo.add(lblA_1);
 
-	    lblMasDe = new JLabel("Mas de 15 unidades:");
+	    lblMasDe = new JLabel("Valor total");
+	    lblMasDe.setHorizontalAlignment(SwingConstants.CENTER);
 	    lblMasDe.setFont(new Font("Fira Code", Font.PLAIN, 12));
-	    lblMasDe.setBounds(10, 188, 154, 30);
+	    lblMasDe.setBounds(38, 148, 112, 30);
 	    panelIzquierdo.add(lblMasDe);
 
-	    txtporcentaje1 = new JTextField();
-	    txtporcentaje1.setBounds(163, 74, 130, 19);
-	    panelIzquierdo.add(txtporcentaje1);
+	    txtmonto = new JTextField();
+	    txtmonto.setBounds(163, 56, 130, 19);
+	    panelIzquierdo.add(txtmonto);
 
-	    txtporcentaje2 = new JTextField();
-	    txtporcentaje2.setBounds(163, 114, 130, 19);
-	    panelIzquierdo.add(txtporcentaje2);
+	    txtdescuento = new JTextField();
+	    txtdescuento.setEditable(false);
+	    txtdescuento.setBounds(163, 96, 130, 19);
+	    panelIzquierdo.add(txtdescuento);
 
-	    txtporcentaje3 = new JTextField();
-	    txtporcentaje3.setBounds(163, 154, 130, 19);
-	    panelIzquierdo.add(txtporcentaje3);
-
-	    txtporcentaje4 = new JTextField();
-	    txtporcentaje4.setBounds(163, 194, 130, 19);
-	    panelIzquierdo.add(txtporcentaje4);
+	    txtvalortotal = new JTextField();
+	    txtvalortotal.setBounds(163, 154, 130, 19);
+	    panelIzquierdo.add(txtvalortotal);
 	    
 	    ImageIcon iconconfirmar = null;
         ImageIcon iconlimpiar = null;
@@ -133,7 +124,7 @@ public class DlgConfigurarDescuentos extends JDialog implements ActionListener {
 	    btnconfirmar.setHorizontalTextPosition(SwingConstants.RIGHT); 
         btnconfirmar.setIconTextGap(10);
 	    btnconfirmar.setFont(new Font("Fira Code", Font.PLAIN, 11));
-	    btnconfirmar.setBounds(25, 261, 120, 35);
+	    btnconfirmar.setBounds(30, 218, 120, 35);
 	    panelIzquierdo.add(btnconfirmar);
 
 	    btnlimpiar = new JButton("Limpiar");
@@ -142,7 +133,7 @@ public class DlgConfigurarDescuentos extends JDialog implements ActionListener {
         btnconfirmar.setIconTextGap(10);
 	    btnlimpiar.setFont(new Font("Fira Code", Font.PLAIN, 11));
 	    btnlimpiar.addActionListener(this);
-	    btnlimpiar.setBounds(189, 261, 120, 35);
+	    btnlimpiar.setBounds(184, 218, 120, 35);
 	    panelIzquierdo.add(btnlimpiar);
 	    
 	    	 
@@ -151,7 +142,7 @@ public class DlgConfigurarDescuentos extends JDialog implements ActionListener {
 	 lblNewLabel_1.setForeground(Color.WHITE);
 	 lblNewLabel_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-	 // 🔥 POSICIÓN FIJA ARRIBA IZQUIERDA
+	
 	 lblNewLabel_1.setBounds(10, 10, 30, 30);
 
 	 lblNewLabel_1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -166,16 +157,30 @@ public class DlgConfigurarDescuentos extends JDialog implements ActionListener {
 	     }
 	 });
 
-	 // 🔥 IMPORTANTE: AGREGAR AL PANEL IZQUIERDO
+	 
 	 panelIzquierdo.add(lblNewLabel_1);
 	 panelIzquierdo.setComponentZOrder(lblNewLabel_1, 0);
 	 panelIzquierdo.repaint();
+	 
+	
+	 panelIzquierdo.addMouseListener(new java.awt.event.MouseAdapter() {
+	     @Override
+	     public void mousePressed(java.awt.event.MouseEvent e) {
+	         xMouse = e.getX();
+	         yMouse = e.getY();
+	     }
+	 });
+
+	 panelIzquierdo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+	     @Override
+	     public void mouseDragged(java.awt.event.MouseEvent e) {
+	         int x = e.getXOnScreen();
+	         int y = e.getYOnScreen();
+	         setLocation(x - xMouse, y - yMouse);
+	     }
+	 });
 
 
-
-	    // =========================
-	    // 🔵 PANEL DERECHO (IMAGEN)
-	    // =========================
 	    panel_1 = new JPanel() {
 	        protected void paintComponent(Graphics g) {
 	            super.paintComponent(g);
@@ -189,22 +194,20 @@ public class DlgConfigurarDescuentos extends JDialog implements ActionListener {
 	    };
 	    panel_1.setBounds(388, 0, 398, 459);
 
-	    panel_1.setLayout(null); // 🔥 necesario para posicionar la X
+	    panel_1.setLayout(null); 
 	    contentPanel.add(panel_1);
 
-	 // 🔥 CENTRADO VERTICAL + IZQUIERDA
+	
 	 panel_1.addComponentListener(new java.awt.event.ComponentAdapter() {
 	     public void componentResized(java.awt.event.ComponentEvent e) {
-	         int x = 10; // izquierda
-	         int y = (panel_1.getHeight() / 2) - 15; // centro vertical
+	         int x = 10; 
+	         int y = (panel_1.getHeight() / 2) - 15; 
 	         lblNewLabel_1.setBounds(x, y, 40, 30);
 	     }
 	 });
 
 
-	    // =========================
-	    // ✨ EFECTO FADE
-	    // =========================
+	    
 	    Timer timer = new Timer(15, new ActionListener() {
 	        float opacity = 0f;
 	        public void actionPerformed(ActionEvent e) {
@@ -230,11 +233,10 @@ public class DlgConfigurarDescuentos extends JDialog implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtnNewButton_1(ActionEvent e) {
-		txtporcentaje1.setText("");
-		txtporcentaje2.setText("");
-		txtporcentaje3.setText("");
-		txtporcentaje4.setText("");
-		txtporcentaje1.requestFocus();
+		txtmonto.setText("");
+		txtdescuento.setText("");
+		txtvalortotal.setText("");
+		txtmonto.requestFocus();
 		
 		
 	}

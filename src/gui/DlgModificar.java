@@ -46,6 +46,7 @@ public class DlgModificar extends JDialog implements ActionListener {
 	private JTextField txtcodigo;
 	private JLabel lblColor;
 	private JTextField txtproveedor;
+	private JButton btnConsultar;
 
 	/**
 	 * Launch the application.
@@ -102,10 +103,13 @@ public class DlgModificar extends JDialog implements ActionListener {
 		contentPanel.add(txttalla);
 		
 		ImageIcon iconCons = null;
+		ImageIcon iconModi = null;
         ImageIcon iconLimp = null;
         try {
-            // Se escala a 20x20 para que entre bien en el botón
-            iconCons = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/guardar.png"))
+        	iconCons = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/consultar.png"))
+                    .getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+            
+            iconModi = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/guardar.png"))
                 .getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
             iconLimp = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/limpiar.png"))
                 .getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
@@ -114,11 +118,11 @@ public class DlgModificar extends JDialog implements ActionListener {
         }
 		
 		btnGuardar = new JButton("Guardar");
-		btnGuardar.setIcon(iconCons);
+		btnGuardar.setIcon(iconModi);
         btnGuardar.setHorizontalTextPosition(SwingConstants.RIGHT); 
         btnGuardar.setIconTextGap(10);
 		btnGuardar.setFont(new Font("Fira Code", Font.PLAIN, 11));
-		btnGuardar.setBounds(35, 377, 118, 38);
+		btnGuardar.setBounds(154, 377, 107, 38);
 		contentPanel.add(btnGuardar);
 		
 		btnlimpiar = new JButton("Limpiar");
@@ -127,8 +131,18 @@ public class DlgModificar extends JDialog implements ActionListener {
 		btnlimpiar.setHorizontalTextPosition(SwingConstants.RIGHT); 
         btnlimpiar.setIconTextGap(10);
 		btnlimpiar.setFont(new Font("Fira Code", Font.PLAIN, 11));
-		btnlimpiar.setBounds(206, 377, 118, 38);
+		btnlimpiar.setBounds(271, 377, 107, 38);
 		contentPanel.add(btnlimpiar);
+		
+		btnConsultar = new JButton("Consultar");
+		btnConsultar.setIcon(iconCons);
+		btnConsultar.addActionListener(this);
+		btnConsultar.setHorizontalTextPosition(SwingConstants.RIGHT);
+		btnConsultar.setIconTextGap(10);
+		btnConsultar.setHorizontalTextPosition(SwingConstants.RIGHT);
+		btnConsultar.setFont(new Font("Fira Code", Font.PLAIN, 11));
+		btnConsultar.setBounds(24, 377, 120, 36);
+		contentPanel.add(btnConsultar);
 		
 		lblProveedor = new JLabel("Stock");
 		lblProveedor.setHorizontalAlignment(SwingConstants.CENTER);
@@ -164,7 +178,7 @@ public class DlgModificar extends JDialog implements ActionListener {
 		txtcolor.setBounds(199, 268, 125, 21);
 		contentPanel.add(txtcolor);
 
-		// PANEL DE LA IMAGEN - AHORA OCUPA TODO EL ALTO (y=0)
+		
 		panel_1 = new JPanel() {
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -181,18 +195,18 @@ public class DlgModificar extends JDialog implements ActionListener {
 				}
 			}
 		};
-		panel_1.setBounds(388, 0, 347, 485); // Empieza en 0 hasta el final
+		panel_1.setBounds(388, 0, 347, 485); 
 		contentPanel.add(panel_1);
 		
-		// BARRA SUPERIOR (Movimiento y Botón X)
+		
 		panel = new JPanel();
-		panel.setOpaque(false); // Transparente para que la imagen se vea debajo
+		panel.setOpaque(false); 
 		panel.setLayout(null);
 		panel.setBounds(0, 0, 735, 33);
 		contentPanel.add(panel);
 		
 		panelcerrar = new JPanel();
-		panelcerrar.setOpaque(false); // Transparente para la X
+		panelcerrar.setOpaque(false); 
 		panelcerrar.setLayout(null);
 		panelcerrar.setBounds(0, 0, 54, 33);
 		panel.add(panelcerrar);
@@ -220,13 +234,15 @@ public class DlgModificar extends JDialog implements ActionListener {
 		txtproveedor.setBounds(199, 309, 125, 21);
 		contentPanel.add(txtproveedor);
 		
-		// Lógica de interacción para la X
+		
+		
+		
 		lblNewLabel_1.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent e) { dispose(); }
 			@Override
 			public void mouseEntered(java.awt.event.MouseEvent e) { 
-				lblNewLabel_1.setForeground(Color.WHITE); // Sutil cambio a rojo
+				lblNewLabel_1.setForeground(Color.WHITE); 
 			}
 			@Override
 			public void mouseExited(java.awt.event.MouseEvent e) { 
@@ -234,7 +250,7 @@ public class DlgModificar extends JDialog implements ActionListener {
 			}
 		});
 
-		// Lógica de arrastrar ventana
+		
 		panel.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mousePressed(java.awt.event.MouseEvent e) {
@@ -248,7 +264,7 @@ public class DlgModificar extends JDialog implements ActionListener {
 			}
 		});
 		
-		// Animación de entrada
+		
 		setOpacity(0f);
 		Timer timer = new Timer(15, new ActionListener() {
 			float opacity = 0f;
