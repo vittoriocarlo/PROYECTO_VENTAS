@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.JTextField;
@@ -47,6 +48,7 @@ public class DlgModificar extends JDialog implements ActionListener {
 	private JLabel lblColor;
 	private JTextField txtproveedor;
 	private JButton btnConsultar;
+	private int indiceActual = -1;
 
 	/**
 	 * Launch the application.
@@ -119,6 +121,7 @@ public class DlgModificar extends JDialog implements ActionListener {
 		
 		btnGuardar = new JButton("Guardar");
 		btnGuardar.setIcon(iconModi);
+		btnGuardar.addActionListener(this);
         btnGuardar.setHorizontalTextPosition(SwingConstants.RIGHT); 
         btnGuardar.setIconTextGap(10);
 		btnGuardar.setFont(new Font("Fira Code", Font.PLAIN, 11));
@@ -282,16 +285,272 @@ public class DlgModificar extends JDialog implements ActionListener {
 	
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnConsultar) {
+			actionPerformedBtnConsultar(e);
+		}
+		if (e.getSource() == btnGuardar) {
+			actionPerformedBtnGuardar(e);
+		}
 		if (e.getSource() == btnlimpiar) {
 			actionPerformedBtnlimpiar(e);
 		}
 	}
+
+	private void mostrarDatos(String codigo, double precio, String talla, int stock, String descripcion, String color,
+			String proveedor) {
+		txtcodigo.setText(codigo);
+		txtPrecio.setText(String.valueOf(precio));
+		txttalla.setText(talla);
+		txtstock.setText(String.valueOf(stock));
+		txtdescripcion.setText(descripcion);
+		txtcolor.setText(color);
+		txtproveedor.setText(proveedor);
+	}
+
+	private int buscarIndicePorCodigo(String cod) {
+		if (cod.equalsIgnoreCase(ventanaOperaciones.codigo1)) return 1;
+		if (cod.equalsIgnoreCase(ventanaOperaciones.codigo2)) return 2;
+		if (cod.equalsIgnoreCase(ventanaOperaciones.codigo3)) return 3;
+		if (cod.equalsIgnoreCase(ventanaOperaciones.codigo4)) return 4;
+		if (cod.equalsIgnoreCase(ventanaOperaciones.codigo5)) return 5;
+		if (cod.equalsIgnoreCase(ventanaOperaciones.codigo6)) return 6;
+		if (cod.equalsIgnoreCase(ventanaOperaciones.codigo7)) return 7;
+		if (cod.equalsIgnoreCase(ventanaOperaciones.codigo8)) return 8;
+		return -1;
+	}
+
+	private String obtenerCodigoPorIndice(int indice) {
+		switch (indice) {
+		case 1:
+			return ventanaOperaciones.codigo1;
+		case 2:
+			return ventanaOperaciones.codigo2;
+		case 3:
+			return ventanaOperaciones.codigo3;
+		case 4:
+			return ventanaOperaciones.codigo4;
+		case 5:
+			return ventanaOperaciones.codigo5;
+		case 6:
+			return ventanaOperaciones.codigo6;
+		case 7:
+			return ventanaOperaciones.codigo7;
+		case 8:
+			return ventanaOperaciones.codigo8;
+		default:
+			return "";
+		}
+	}
+
+	private boolean existeCodigoEnOtroRegistro(String nuevoCodigo, int indiceEditar) {
+		for (int i = 1; i <= 8; i++) {
+			if (i == indiceEditar) {
+				continue;
+			}
+			if (nuevoCodigo.equalsIgnoreCase(obtenerCodigoPorIndice(i))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	protected void actionPerformedBtnConsultar(ActionEvent e) {
+		String cod = txtcodigo.getText().trim();
+
+		if (cod.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Ingresa un código de C001 a C008.");
+			txtcodigo.requestFocus();
+			return;
+		}
+
+		indiceActual = buscarIndicePorCodigo(cod);
+		if (indiceActual == -1) {
+			JOptionPane.showMessageDialog(this, "El código " + cod + " no existe.");
+			actionPerformedBtnlimpiar(null);
+			return;
+		}
+
+		switch (indiceActual) {
+		case 1:
+			mostrarDatos(ventanaOperaciones.codigo1, ventanaOperaciones.precio1, ventanaOperaciones.talla1,
+					ventanaOperaciones.stock1, ventanaOperaciones.descripcion1, ventanaOperaciones.color1,
+					ventanaOperaciones.proveedor1);
+			break;
+		case 2:
+			mostrarDatos(ventanaOperaciones.codigo2, ventanaOperaciones.precio2, ventanaOperaciones.talla2,
+					ventanaOperaciones.stock2, ventanaOperaciones.descripcion2, ventanaOperaciones.color2,
+					ventanaOperaciones.proveedor2);
+			break;
+		case 3:
+			mostrarDatos(ventanaOperaciones.codigo3, ventanaOperaciones.precio3, ventanaOperaciones.talla3,
+					ventanaOperaciones.stock3, ventanaOperaciones.descripcion3, ventanaOperaciones.color3,
+					ventanaOperaciones.proveedor3);
+			break;
+		case 4:
+			mostrarDatos(ventanaOperaciones.codigo4, ventanaOperaciones.precio4, ventanaOperaciones.talla4,
+					ventanaOperaciones.stock4, ventanaOperaciones.descripcion4, ventanaOperaciones.color4,
+					ventanaOperaciones.proveedor4);
+			break;
+		case 5:
+			mostrarDatos(ventanaOperaciones.codigo5, ventanaOperaciones.precio5, ventanaOperaciones.talla5,
+					ventanaOperaciones.stock5, ventanaOperaciones.descripcion5, ventanaOperaciones.color5,
+					ventanaOperaciones.proveedor5);
+			break;
+		case 6:
+			mostrarDatos(ventanaOperaciones.codigo6, ventanaOperaciones.precio6, ventanaOperaciones.talla6,
+					ventanaOperaciones.stock6, ventanaOperaciones.descripcion6, ventanaOperaciones.color6,
+					ventanaOperaciones.provedor6);
+			break;
+		case 7:
+			mostrarDatos(ventanaOperaciones.codigo7, ventanaOperaciones.precio7, ventanaOperaciones.talla7,
+					ventanaOperaciones.stock7, ventanaOperaciones.descripcion7, ventanaOperaciones.color7,
+					ventanaOperaciones.proveedor7);
+			break;
+		case 8:
+			mostrarDatos(ventanaOperaciones.codigo8, ventanaOperaciones.precio8, ventanaOperaciones.talla8,
+					ventanaOperaciones.stock8, ventanaOperaciones.descripcion8, ventanaOperaciones.color8,
+					ventanaOperaciones.proveedor8);
+			break;
+		default:
+			break;
+		}
+	}
+
+	protected void actionPerformedBtnGuardar(ActionEvent e) {
+		if (indiceActual == -1) {
+			JOptionPane.showMessageDialog(this, "Primero consulta un código para poder modificarlo.");
+			txtcodigo.requestFocus();
+			return;
+		}
+
+		String codigo = txtcodigo.getText().trim().toUpperCase();
+		String precioTxt = txtPrecio.getText().trim();
+		String talla = txttalla.getText().trim();
+		String stockTxt = txtstock.getText().trim();
+		String descripcion = txtdescripcion.getText().trim();
+		String color = txtcolor.getText().trim();
+		String proveedor = txtproveedor.getText().trim();
+
+		if (codigo.isEmpty() || precioTxt.isEmpty() || talla.isEmpty() || stockTxt.isEmpty() || descripcion.isEmpty()
+				|| color.isEmpty() || proveedor.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Completa todos los campos antes de guardar.");
+			return;
+		}
+
+		double precio;
+		int stock;
+		try {
+			precio = Double.parseDouble(precioTxt);
+			stock = Integer.parseInt(stockTxt);
+		} catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(this, "Precio y stock deben ser valores numéricos.");
+			return;
+		}
+
+		if (precio <= 0) {
+			JOptionPane.showMessageDialog(this, "El precio debe ser mayor a 0.");
+			return;
+		}
+
+		if (stock < 0) {
+			JOptionPane.showMessageDialog(this, "El stock no puede ser negativo.");
+			return;
+		}
+
+		if (existeCodigoEnOtroRegistro(codigo, indiceActual)) {
+			JOptionPane.showMessageDialog(this, "Ese código ya existe en otro registro.");
+			return;
+		}
+
+		switch (indiceActual) {
+		case 1:
+			ventanaOperaciones.codigo1 = codigo;
+			ventanaOperaciones.precio1 = precio;
+			ventanaOperaciones.talla1 = talla;
+			ventanaOperaciones.stock1 = stock;
+			ventanaOperaciones.descripcion1 = descripcion;
+			ventanaOperaciones.color1 = color;
+			ventanaOperaciones.proveedor1 = proveedor;
+			break;
+		case 2:
+			ventanaOperaciones.codigo2 = codigo;
+			ventanaOperaciones.precio2 = precio;
+			ventanaOperaciones.talla2 = talla;
+			ventanaOperaciones.stock2 = stock;
+			ventanaOperaciones.descripcion2 = descripcion;
+			ventanaOperaciones.color2 = color;
+			ventanaOperaciones.proveedor2 = proveedor;
+			break;
+		case 3:
+			ventanaOperaciones.codigo3 = codigo;
+			ventanaOperaciones.precio3 = precio;
+			ventanaOperaciones.talla3 = talla;
+			ventanaOperaciones.stock3 = stock;
+			ventanaOperaciones.descripcion3 = descripcion;
+			ventanaOperaciones.color3 = color;
+			ventanaOperaciones.proveedor3 = proveedor;
+			break;
+		case 4:
+			ventanaOperaciones.codigo4 = codigo;
+			ventanaOperaciones.precio4 = precio;
+			ventanaOperaciones.talla4 = talla;
+			ventanaOperaciones.stock4 = stock;
+			ventanaOperaciones.descripcion4 = descripcion;
+			ventanaOperaciones.color4 = color;
+			ventanaOperaciones.proveedor4 = proveedor;
+			break;
+		case 5:
+			ventanaOperaciones.codigo5 = codigo;
+			ventanaOperaciones.precio5 = precio;
+			ventanaOperaciones.talla5 = talla;
+			ventanaOperaciones.stock5 = stock;
+			ventanaOperaciones.descripcion5 = descripcion;
+			ventanaOperaciones.color5 = color;
+			ventanaOperaciones.proveedor5 = proveedor;
+			break;
+		case 6:
+			ventanaOperaciones.codigo6 = codigo;
+			ventanaOperaciones.precio6 = precio;
+			ventanaOperaciones.talla6 = talla;
+			ventanaOperaciones.stock6 = stock;
+			ventanaOperaciones.descripcion6 = descripcion;
+			ventanaOperaciones.color6 = color;
+			ventanaOperaciones.provedor6 = proveedor;
+			break;
+		case 7:
+			ventanaOperaciones.codigo7 = codigo;
+			ventanaOperaciones.precio7 = precio;
+			ventanaOperaciones.talla7 = talla;
+			ventanaOperaciones.stock7 = stock;
+			ventanaOperaciones.descripcion7 = descripcion;
+			ventanaOperaciones.color7 = color;
+			ventanaOperaciones.proveedor7 = proveedor;
+			break;
+		case 8:
+			ventanaOperaciones.codigo8 = codigo;
+			ventanaOperaciones.precio8 = precio;
+			ventanaOperaciones.talla8 = talla;
+			ventanaOperaciones.stock8 = stock;
+			ventanaOperaciones.descripcion8 = descripcion;
+			ventanaOperaciones.color8 = color;
+			ventanaOperaciones.proveedor8 = proveedor;
+			break;
+		default:
+			break;
+		}
+
+		JOptionPane.showMessageDialog(this, "Registro modificado correctamente.");
+	}
+
 	protected void actionPerformedBtnlimpiar(ActionEvent e) {
-		//cboModelo.setSelectedIndex(0);
+		txtcodigo.setText("");
 		txtPrecio.setText("");
 		txttalla.setText("");
 		txtstock.setText("");
+		txtdescripcion.setText("");
+		txtcolor.setText("");
+		txtproveedor.setText("");
+		indiceActual = -1;
 		txtcodigo.requestFocus();
-		txtPrecio.requestFocus();
 	}
 }
