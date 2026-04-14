@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>PROYECTO_VENTAS</name>
+	<name>DlgHistorialVentas</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -16,7 +16,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1776136122724</id>
+			<id>1776136122644</id>
 			<name></name>
 			<type>30</type>
 			<matcher>
