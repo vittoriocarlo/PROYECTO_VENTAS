@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.EventQueue;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -15,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -92,7 +95,7 @@ public class DlgResumen extends JFrame implements ActionListener {
 		table.setModel(new DefaultTableModel(
 			new Object[][] {},
 			new String[] {
-					"Codigo", "Producto", "Descripcion", "Precio", "Fecha venta", "Descuento", "Cant. Vendida", "Total"
+					"Cliente","Codigo", "Descripcion", "Precio", "Fecha venta", "Descuento", "Cant. Vendida", "Total"
 			}
 		));
 		
@@ -113,7 +116,7 @@ public class DlgResumen extends JFrame implements ActionListener {
 		
 		panelcerrar = new JPanel();
 		panelcerrar.setLayout(null);
-		panelcerrar.setBounds(0, 0, 54, 33);
+		panelcerrar.setBounds(800, 0, 54, 33);
 		panel.add(panelcerrar);
 		
 		lblNewLabel = new JLabel("X");
@@ -189,10 +192,57 @@ public class DlgResumen extends JFrame implements ActionListener {
 	}
 
 	protected void actionPerformedBtnMostrar(ActionEvent e) {
-		
-	}
+		DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+	    modelo.setRowCount(0); 
 
+	    if (ventanaOperaciones.historialVentas.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "No hay ventas registradas.");
+	        return;
+	    }
+
+	    
+	    String[] filas = ventanaOperaciones.historialVentas.split("\n");
+	    for (int i = 0; i < filas.length; i++) {
+	        
+	        String[] datos = filas[i].split(";");
+	        modelo.addRow(datos);
+	    }
+	}
 	protected void actionPerformedBtnDescargar(ActionEvent e) {
+		
+	    if (ventanaOperaciones.historialVentas.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "No hay ventas realizadas para la descarga");
+	        return;
+	    }
+
+	    try {
+	        
+	        FileWriter fw = new FileWriter("Reporte_Ventas.txt");
+	        PrintWriter pw = new PrintWriter(fw);
+
+	        
+	        pw.println("===============================================================");
+	        pw.println("                REPORTE GENERAL DE VENTAS                      ");
+	        pw.println("===============================================================");
+	        pw.println("CLIENTE | COD | DESC | PRECIO | FECHA | DESC | CANT | TOTAL");
+	        pw.println("---------------------------------------------------------------");
+
+	        
+	        String contenidoLimpio = ventanaOperaciones.historialVentas.replace(";", " | ");
+	        pw.print(contenidoLimpio);
+
+	        pw.println("===============================================================");
+	        pw.println("Fin del reporte.");
+
+	        
+	        pw.close();
+	        fw.close();
+
+	        JOptionPane.showMessageDialog(this, "¡Descargado con éxito! ");
+
+	    } catch (Exception ex) {
+	        JOptionPane.showMessageDialog(this, "Error al descargar: " + ex.getMessage());
+	    }
 		
 	}
 }

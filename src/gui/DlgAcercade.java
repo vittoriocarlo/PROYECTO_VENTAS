@@ -86,10 +86,12 @@ public class DlgAcercade extends JDialog implements ActionListener {
 		
 		panelcerrar = new JPanel();
 		panelcerrar.setLayout(null);
-		panelcerrar.setBounds(0, 0, 54, 33);
+		panelcerrar.setBounds(0, 0, 764, 33);
 		panel.add(panelcerrar);
 		
 		lblNewLabel_2 = new JLabel("X");
+		lblNewLabel_2.setBounds(710, 0, 54, 33);
+		panelcerrar.add(lblNewLabel_2);
 		lblNewLabel_2.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblNewLabel_2.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel_2.setPreferredSize(new Dimension(40, 40));
@@ -97,14 +99,6 @@ public class DlgAcercade extends JDialog implements ActionListener {
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setFont(new Font("Calibri Light", Font.PLAIN, 24));
 		lblNewLabel_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel_2.setBounds(0, 0, 54, 33);
-		panelcerrar.add(lblNewLabel_2);
-		
-		lblDesarrolladoPor = new JLabel("Ingeniería de Sistemas Informática");
-		lblDesarrolladoPor.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDesarrolladoPor.setFont(new Font("Fira Code", Font.PLAIN, 18));
-		lblDesarrolladoPor.setBounds(177, 191, 400, 42);
-		contentPanel.add(lblDesarrolladoPor);
 		
 		lblNewLabel_2.addMouseListener(new java.awt.event.MouseAdapter() {
 		    @Override
@@ -122,6 +116,12 @@ public class DlgAcercade extends JDialog implements ActionListener {
 		        lblNewLabel_2.setForeground(java.awt.Color.WHITE);
 		    }
 		});
+		
+		lblDesarrolladoPor = new JLabel("Ingeniería de Sistemas Informática");
+		lblDesarrolladoPor.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDesarrolladoPor.setFont(new Font("Fira Code", Font.PLAIN, 18));
+		lblDesarrolladoPor.setBounds(177, 191, 400, 42);
+		contentPanel.add(lblDesarrolladoPor);
 		
 		Timer timer = new Timer(15, new ActionListener() {
 	        float opacity = 0f;

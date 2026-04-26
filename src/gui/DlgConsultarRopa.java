@@ -366,7 +366,7 @@ public class DlgConsultarRopa extends JDialog implements ActionListener {
 			
 		} else {
 			javax.swing.JOptionPane.showMessageDialog(this, "El código " + cod + " no existe.");
-			actionPerformedBtnNewButton(null); //limpiamos aqui en caso no existan
+			actionPerformedBtnNewButton(null); 
 		}
 	}
 

@@ -20,6 +20,12 @@ import javax.swing.SwingConstants;
 public class ventanaOperaciones extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	
+	public static String historialVentas = "";
+	
+	public static double cuotaDiaria = 50000.00; 
+	public static int contadorVentasGlobal = 0;
+	public static double importeAcumuladoGeneral = 0;
 
 	public static String codigo1 = "C001";
 	public static String descripcion1 = "Casaca de Cuero Pro";
@@ -84,6 +90,10 @@ public class ventanaOperaciones extends JFrame implements ActionListener {
 	public static int stock8 = 60;
 	public static String color8 = "Rojo";
 	public static String proveedor8 = "Sport World";
+	
+	public static String fechaActual() {
+	    return java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	}
 
 	JMenuBar menuBar;
 	private JMenu mnMatenimiento;
@@ -124,9 +134,6 @@ public class ventanaOperaciones extends JFrame implements ActionListener {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public ventanaOperaciones() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 833, 450);

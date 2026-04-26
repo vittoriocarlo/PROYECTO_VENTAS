@@ -102,8 +102,10 @@ public class DlgVender extends JDialog implements ActionListener {
 		contentPanel.add(scrollPane);
 		
 		txtS = new JTextArea();
-		scrollPane.setColumnHeaderView(txtS);
+		//scrollPane.setColumnHeaderView(txtS);
 		txtS.setEditable(false);
+		txtS.setCaretPosition(0);
+		scrollPane.setViewportView(txtS);
 		
 		ImageIcon iconlimpiar = null;
 		ImageIcon iconprocesar = null;
@@ -329,8 +331,11 @@ public class DlgVender extends JDialog implements ActionListener {
 		txtcodigo.setText("");
 		txtprecio.setText("");
 		txtstock.setText("");
+		txtnombrecliente.setText("");
 		txtdescripcion.setText("");
 		txtcodigo.requestFocus();
+		txtcantidad.setText("");
+		txtS.setText("");
 		
 	}
 	void buscarProducto() {
@@ -410,6 +415,7 @@ public class DlgVender extends JDialog implements ActionListener {
 		txtdescripcion.setText(descripcion);
 		txtprecio.setText("S/. " + precio);
 		txtstock.setText("" + stock);
+		
 
 		}
 
@@ -471,6 +477,7 @@ public class DlgVender extends JDialog implements ActionListener {
 
 		txtS.setText(" *** BOLETA DE VENTA ***\n");
 		txtS.append("--------------------------------\n");
+		txtS.append("FECHA DE VENTA: " + ventanaOperaciones.fechaActual() + "\n");
 		txtS.append("CLIENTE: " + nombreCliente + "\n");
 		txtS.append("PRODUCTO: " + descripcion + "\n");
 		txtS.append("PRECIO UNITARIO: S/. " + precio + "\n");
@@ -481,6 +488,8 @@ public class DlgVender extends JDialog implements ActionListener {
 		txtS.append("TOTAL A PAGAR: S/. " +  importePagar + "\n");
 		txtS.append("--------------------------------\n");
 		txtS.append("OBSEQUIO: " + obsequio + "\n");
+		
+		txtS.setCaretPosition(0);
 
 		}
 
@@ -502,6 +511,32 @@ public class DlgVender extends JDialog implements ActionListener {
 			            calcularVenta();
 			            actualizarStock(); 
 			            mostrarBoleta();
+			            
+			            ventanaOperaciones.historialVentas += 
+			                    nombreCliente + ";" + 
+			                    codigo + ";" + 
+			                    descripcion + ";" + 
+			                    precio + ";" + 
+			                    ventanaOperaciones.fechaActual() + ";" + 
+			                    importeDescuento + ";" + 
+			                    cantidad + ";" + 
+			                    importePagar + "\n";
+			            
+			            ventanaOperaciones.contadorVentasGlobal++;
+			            ventanaOperaciones.importeAcumuladoGeneral += importePagar;
+
+			            if (ventanaOperaciones.contadorVentasGlobal % 5 == 0) {
+			                double cuota = ventanaOperaciones.cuotaDiaria; 
+			                double porcentaje = (cuota > 0) ? (ventanaOperaciones.importeAcumuladoGeneral / cuota) * 100 : 0;
+			                
+			                String reporte = "Venta Nro. " + ventanaOperaciones.contadorVentasGlobal + "\n" +
+			                                 "Importe total general acumulado : S/. " + ventanaOperaciones.importeAcumuladoGeneral + "\n" +
+			                                 "Porcentaje de la cuota diaria : " +  porcentaje + "%";
+			                
+			                JOptionPane.showMessageDialog(this, reporte, "Avance de ventas", JOptionPane.INFORMATION_MESSAGE);
+			            }
+			            
+			            
 			            JOptionPane.showMessageDialog(this, "Venta realizada con éxito.");
 			        } else {
 			            JOptionPane.showMessageDialog(this, "No hay stock suficiente.");
