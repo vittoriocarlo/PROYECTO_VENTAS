@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,7 +27,6 @@ public class DlgListar extends JDialog implements ActionListener {
 	private JScrollPane scrollPane;
 	private JButton btnlistar;
 	private JTable table;
-	private int xMouse, yMouse;
 	private JPanel panel;
 	private JPanel panelcerrar;
 	private JLabel lblNewLabel;
@@ -171,5 +169,38 @@ public class DlgListar extends JDialog implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtnNewButton(ActionEvent e) {
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+
+		agregarFila(model, ventanaOperaciones.codigo1, ventanaOperaciones.precio1, ventanaOperaciones.talla1,
+				ventanaOperaciones.stock1, ventanaOperaciones.descripcion1, ventanaOperaciones.color1,
+				ventanaOperaciones.proveedor1);
+		agregarFila(model, ventanaOperaciones.codigo2, ventanaOperaciones.precio2, ventanaOperaciones.talla2,
+				ventanaOperaciones.stock2, ventanaOperaciones.descripcion2, ventanaOperaciones.color2,
+				ventanaOperaciones.proveedor2);
+		agregarFila(model, ventanaOperaciones.codigo3, ventanaOperaciones.precio3, ventanaOperaciones.talla3,
+				ventanaOperaciones.stock3, ventanaOperaciones.descripcion3, ventanaOperaciones.color3,
+				ventanaOperaciones.proveedor3);
+		agregarFila(model, ventanaOperaciones.codigo4, ventanaOperaciones.precio4, ventanaOperaciones.talla4,
+				ventanaOperaciones.stock4, ventanaOperaciones.descripcion4, ventanaOperaciones.color4,
+				ventanaOperaciones.proveedor4);
+		agregarFila(model, ventanaOperaciones.codigo5, ventanaOperaciones.precio5, ventanaOperaciones.talla5,
+				ventanaOperaciones.stock5, ventanaOperaciones.descripcion5, ventanaOperaciones.color5,
+				ventanaOperaciones.proveedor5);
+		agregarFila(model, ventanaOperaciones.codigo6, ventanaOperaciones.precio6, ventanaOperaciones.talla6,
+				ventanaOperaciones.stock6, ventanaOperaciones.descripcion6, ventanaOperaciones.color6,
+				ventanaOperaciones.proveedor6);
+		agregarFila(model, ventanaOperaciones.codigo7, ventanaOperaciones.precio7, ventanaOperaciones.talla7,
+				ventanaOperaciones.stock7, ventanaOperaciones.descripcion7, ventanaOperaciones.color7,
+				ventanaOperaciones.proveedor7);
+		agregarFila(model, ventanaOperaciones.codigo8, ventanaOperaciones.precio8, ventanaOperaciones.talla8,
+				ventanaOperaciones.stock8, ventanaOperaciones.descripcion8, ventanaOperaciones.color8,
+				ventanaOperaciones.proveedor8);
+	}
+
+	private void agregarFila(DefaultTableModel model, String codigo, double precio, String talla, int stock,
+			String descripcion, String color, String proveedor) {
+		Object[] fila = { codigo, precio, talla, stock, descripcion, color, proveedor };
+		model.addRow(fila);
 	}
 }
