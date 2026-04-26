@@ -9,6 +9,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
@@ -38,7 +40,10 @@ public class DlgConfigurarObsequio extends JDialog implements ActionListener {
 	private JPanel panelcerrar;
 	private JLabel lblNewLabel_1;
 	private int xMouse, yMouse;
-	private JComboBox cboObsequio;
+	
+	public static double importeMinimo;
+	public static String tipoObsequio;
+	public static JTextField txtobsequio;
 
 	/**
 	 * Launch the application.
@@ -97,6 +102,7 @@ public class DlgConfigurarObsequio extends JDialog implements ActionListener {
         }
 		
 		btnconfirmar = new JButton("Aceptar");
+		btnconfirmar.addActionListener(this);
 		btnconfirmar.setIcon(iconconfirmar);
 		btnconfirmar.setHorizontalTextPosition(SwingConstants.RIGHT); 
 	    btnconfirmar.setIconTextGap(10);
@@ -148,9 +154,10 @@ public class DlgConfigurarObsequio extends JDialog implements ActionListener {
 		lblNewLabel_1.setBounds(0, 0, 54, 33);
 		panelcerrar.add(lblNewLabel_1);
 		
-		cboObsequio = new JComboBox();
-		cboObsequio.setBounds(156, 124, 174, 20);
-		contentPanel.add(cboObsequio);
+		txtobsequio = new JTextField();
+		txtobsequio.setColumns(10);
+		txtobsequio.setBounds(158, 125, 172, 24);
+		contentPanel.add(txtobsequio);
 		
 		
 				lblNewLabel_1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -196,21 +203,64 @@ public class DlgConfigurarObsequio extends JDialog implements ActionListener {
 		setOpacity(0f);
 		timer.start();
 		
-		String[] listaPremios = {"Seleccione ", "Gorrita Pro", "Tomatodo", "Pack de medias"};
-		for(String premio : listaPremios) {
-			cboObsequio.addItem(premio);
-		}
+		
 	}
 	
 	
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnconfirmar) {
+			actionPerformedBtnconfirmar(e);
+		}
 		if (e.getSource() == btnlimpiar) {
 			actionPerformedBtnCancelar(e);
 		}
 	}
 	protected void actionPerformedBtnCancelar(ActionEvent e) {
-		cboObsequio.setSelectedIndex(0);
 		txtCantidadMinima.setText("");
-		cboObsequio.requestFocus();
+		txtobsequio.setText("");
+		txtCantidadMinima.requestFocus();
 	}
+	protected void actionPerformedBtnconfirmar(ActionEvent e) {
+		leerImporte();
+	    if (importeMinimo > 0) {
+	        determinarObsequio();
+	        mostrarObsequio();
+	        
+	        dispose();
+	}
+	}
+	    
+	    void leerImporte() {
+	        try {
+	            String texto = txtCantidadMinima.getText().trim();
+	            if (texto.isEmpty()) {
+	                JOptionPane.showMessageDialog(this, "Por favor, ingresa un importe.");
+	                importeMinimo = 0;
+	                return;
+	            }
+	            importeMinimo = Double.parseDouble(texto);
+	        } catch (Exception e) {
+	            JOptionPane.showMessageDialog(this, "Ingresa un valor numérico válido.");
+	            importeMinimo = 0;
+	        }
+	    }
+	    
+	    void determinarObsequio() {
+	        if (importeMinimo >= 2500) {
+	            tipoObsequio = "Mochila Premium";
+	        } else if (importeMinimo >= 1000) {
+	            tipoObsequio = "Memoria USB 64GB";
+	        } else if (importeMinimo >= 500) {
+	            tipoObsequio = "Lapicero de Metal";
+	        } else {
+	            tipoObsequio = "Ninguno (Monto insuficiente)";
+	        }
+	    }
+	    
+	    void mostrarObsequio() {
+	        if (importeMinimo > 0) {
+	            txtobsequio.setText(tipoObsequio);
+	            JOptionPane.showMessageDialog(this, "Obsequio configurado: " + tipoObsequio);
+	        }
+	    }
 }

@@ -9,6 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
@@ -46,6 +47,10 @@ public class DlgVender extends JDialog implements ActionListener {
 	private int xMouse, yMouse;
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
+	
+	private String codigo, descripcion, nombreCliente, obsequio, pDesc;
+	private double precio, importeCompra, importeDescuento, importePagar;
+	private int stock, cantidad;
 
 	/**
 	 * Launch the application.
@@ -234,6 +239,7 @@ public class DlgVender extends JDialog implements ActionListener {
 		txtcodigo = new JTextField();
 		txtcodigo.setColumns(10);
 		txtcodigo.setBounds(151, 64, 137, 21);
+		txtcodigo.addActionListener(this);
 		contentPanel.add(txtcodigo);
 		
 		
@@ -306,13 +312,203 @@ public class DlgVender extends JDialog implements ActionListener {
 		if (e.getSource() == btnlimpiar) {
 			actionPerformedBtnlimpiar(e);
 			
+			
+			
 		}
+		
+		else if (e.getSource() == txtcodigo) {
+	        buscarProducto();
+	    }
+	   
+	    else if (e.getSource() == btnprocesar) {
+	        actionPerformedBtnProcesar(e);
+	    }
 	}
 	protected void actionPerformedBtnlimpiar(ActionEvent e) {
-		//cboModelo.setSelectedIndex(0);
+		
 		txtcodigo.setText("");
 		txtprecio.setText("");
+		txtstock.setText("");
+		txtdescripcion.setText("");
 		txtcodigo.requestFocus();
 		
 	}
+	void buscarProducto() {
+
+		codigo = txtcodigo.getText().trim();
+
+
+		if (codigo.equalsIgnoreCase("C001")) {
+
+		descripcion = ventanaOperaciones.descripcion1;
+
+		precio = ventanaOperaciones.precio1;
+
+		stock = ventanaOperaciones.stock1;
+
+		} else if (codigo.equalsIgnoreCase("C002")) {
+
+		descripcion = ventanaOperaciones.descripcion2;
+
+		precio = ventanaOperaciones.precio2;
+
+		stock = ventanaOperaciones.stock2;
+
+		} else if (codigo.equalsIgnoreCase("C003")) {
+
+		descripcion = ventanaOperaciones.descripcion3;
+
+		precio = ventanaOperaciones.precio3;
+
+		stock = ventanaOperaciones.stock3;
+
+		} else if(codigo.equalsIgnoreCase("C004")) {
+			descripcion = ventanaOperaciones.descripcion4;
+
+			precio = ventanaOperaciones.precio4;
+
+			stock = ventanaOperaciones.stock4;
+			
+		} else if(codigo.equalsIgnoreCase("C005")) {
+			descripcion = ventanaOperaciones.descripcion5;
+
+			precio = ventanaOperaciones.precio5;
+
+			stock = ventanaOperaciones.stock5;
+			
+		} else if(codigo.equalsIgnoreCase("C006")) {
+			descripcion = ventanaOperaciones.descripcion6;
+
+			precio = ventanaOperaciones.precio6;
+
+			stock = ventanaOperaciones.stock6;	
+			
+		} else if(codigo.equalsIgnoreCase("C007")) {
+			descripcion = ventanaOperaciones.descripcion7;
+
+			precio = ventanaOperaciones.precio7;
+
+			stock = ventanaOperaciones.stock7;
+			
+		} else if(codigo.equalsIgnoreCase("C008")) {
+			descripcion = ventanaOperaciones.descripcion8;
+
+			precio = ventanaOperaciones.precio8;
+
+			stock = ventanaOperaciones.stock8;	
+			
+		} else {
+			
+		
+
+		javax.swing.JOptionPane.showMessageDialog(this, "Código no existe");
+
+		return;
+
+		}
+
+		txtdescripcion.setText(descripcion);
+		txtprecio.setText("S/. " + precio);
+		txtstock.setText("" + stock);
+
+		}
+
+
+		void leerDatosVenta() {
+
+		nombreCliente = txtnombrecliente.getText().trim();
+		cantidad = Integer.parseInt(txtcantidad.getText().trim());
+
+		}
+
+
+		void calcularVenta() {
+
+		importeCompra = precio * cantidad;
+
+		pDesc = DlgConfigurarDescuentos.porcentaje;
+
+		if (pDesc == null) pDesc = "0%"; 
+
+		double numDesc = Double.parseDouble(pDesc.replace("%", "")) / 100.0;
+
+		importeDescuento = importeCompra * numDesc;
+
+		importePagar = importeCompra - importeDescuento;
+
+		obsequio = DlgConfigurarObsequio.tipoObsequio;
+
+		if (obsequio == null) obsequio = "Ninguno";
+
+		}
+		
+		void actualizarStock() {
+		    
+		    if (codigo.equalsIgnoreCase("C001")) {
+		        ventanaOperaciones.stock1 -= cantidad;
+		    } else if (codigo.equalsIgnoreCase("C002")) {
+		        ventanaOperaciones.stock2 -= cantidad;
+		    } else if (codigo.equalsIgnoreCase("C003")) {
+		        ventanaOperaciones.stock3 -= cantidad;
+		    } else if (codigo.equalsIgnoreCase("C004")) {
+		        ventanaOperaciones.stock3 -= cantidad;
+		    }else if (codigo.equalsIgnoreCase("C005")) {
+		        ventanaOperaciones.stock3 -= cantidad;
+		    }else if (codigo.equalsIgnoreCase("C006")) {
+		        ventanaOperaciones.stock3 -= cantidad;
+		    }else if (codigo.equalsIgnoreCase("C007")) {
+		        ventanaOperaciones.stock3 -= cantidad;
+		    }else if (codigo.equalsIgnoreCase("C008")) {
+		        ventanaOperaciones.stock3 -= cantidad;
+		    }
+		    
+		    
+		    txtstock.setText("" + (stock - cantidad));
+		}
+
+
+		void mostrarBoleta() {
+
+		txtS.setText(" *** BOLETA DE VENTA ***\n");
+		txtS.append("--------------------------------\n");
+		txtS.append("CLIENTE: " + nombreCliente + "\n");
+		txtS.append("PRODUCTO: " + descripcion + "\n");
+		txtS.append("PRECIO UNITARIO: S/. " + precio + "\n");
+		txtS.append("CANTIDAD: " + cantidad + "\n");
+		txtS.append("--------------------------------\n");
+		txtS.append("IMPORTE COMPRA: S/. " +  importeCompra + "\n");
+		txtS.append("DESCUENTO (" + pDesc + "): S/. " +  importeDescuento + "\n");
+		txtS.append("TOTAL A PAGAR: S/. " +  importePagar + "\n");
+		txtS.append("--------------------------------\n");
+		txtS.append("OBSEQUIO: " + obsequio + "\n");
+
+		}
+
+		protected void actionPerformedBtnProcesar(ActionEvent e) {
+
+			if (txtnombrecliente.getText().trim().isEmpty() || 
+			        txtcodigo.getText().trim().isEmpty() || 
+			        txtcantidad.getText().trim().isEmpty()) {
+			        
+			        JOptionPane.showMessageDialog(this, "¡Debe completar todos los datos!", "Error", JOptionPane.ERROR_MESSAGE);
+			        return; 
+			    }
+
+			    try {
+			        
+			        leerDatosVenta();
+
+			        if (cantidad <= stock) {
+			            calcularVenta();
+			            actualizarStock(); 
+			            mostrarBoleta();
+			            JOptionPane.showMessageDialog(this, "Venta realizada con éxito.");
+			        } else {
+			            JOptionPane.showMessageDialog(this, "No hay stock suficiente.");
+			        }
+			    } catch (NumberFormatException ex) {
+			        JOptionPane.showMessageDialog(this, "En cantidad solo se permiten números.");
+			    }
+			}
 }
+

@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 
 import java.awt.FlowLayout;
 
@@ -31,8 +32,6 @@ public class DlgConfigurarDescuentos extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
 	private JLabel lblNewLabel;
 	private JLabel lblA_1;
-	private JLabel lblMasDe;
-	private JTextField txtvalortotal;
 	private JButton btnconfirmar;
 	private JButton btnlimpiar;
 	private JTextField txtdescuento;
@@ -42,6 +41,9 @@ public class DlgConfigurarDescuentos extends JDialog implements ActionListener {
 	private JLabel lblNewLabel_1;
 	private JPanel panel_1;
 	private int xMouse, yMouse;
+	
+	public static double monto, descuento; 
+	public static String porcentaje; 
 
 	/**
 	 * Launch the application.
@@ -87,12 +89,6 @@ public class DlgConfigurarDescuentos extends JDialog implements ActionListener {
 	    lblA_1.setBounds(20, 90, 130, 30);
 	    panelIzquierdo.add(lblA_1);
 
-	    lblMasDe = new JLabel("Valor total");
-	    lblMasDe.setHorizontalAlignment(SwingConstants.CENTER);
-	    lblMasDe.setFont(new Font("Fira Code", Font.PLAIN, 12));
-	    lblMasDe.setBounds(38, 148, 112, 30);
-	    panelIzquierdo.add(lblMasDe);
-
 	    txtmonto = new JTextField();
 	    txtmonto.setBounds(163, 56, 130, 19);
 	    panelIzquierdo.add(txtmonto);
@@ -101,10 +97,6 @@ public class DlgConfigurarDescuentos extends JDialog implements ActionListener {
 	    txtdescuento.setEditable(false);
 	    txtdescuento.setBounds(163, 96, 130, 19);
 	    panelIzquierdo.add(txtdescuento);
-
-	    txtvalortotal = new JTextField();
-	    txtvalortotal.setBounds(163, 154, 130, 19);
-	    panelIzquierdo.add(txtvalortotal);
 	    
 	    ImageIcon iconconfirmar = null;
         ImageIcon iconlimpiar = null;
@@ -235,11 +227,68 @@ public class DlgConfigurarDescuentos extends JDialog implements ActionListener {
 	protected void actionPerformedBtnNewButton_1(ActionEvent e) {
 		txtmonto.setText("");
 		txtdescuento.setText("");
-		txtvalortotal.setText("");
 		txtmonto.requestFocus();
 		
 		
 	}
 	protected void actionPerformedBtnconfirmar(ActionEvent e) {
+		
+		leerMonto();
+	    if (monto > 0) {
+	        calcularDescuento();
+	        resultado();
+	    }
+	    
+	    dispose();
+		
+	}
+	
+	void leerMonto() {
+	    try {
+	        String texto = txtmonto.getText().trim();
+	        if (texto.isEmpty()) {
+	            JOptionPane.showMessageDialog(this, "Ingresa un monto primero.");
+	            monto = 0;
+	            return;
+	        }
+	        monto = Double.parseDouble(texto);
+	    } catch (Exception e) {
+	        JOptionPane.showMessageDialog(this, "Escribe un número válido.");
+	        monto = 0;
+	    }
+	}
+	
+	void calcularDescuento() {
+	    if (monto >= 2500) {
+	        porcentaje = "15%";
+	        descuento = monto * 0.15;
+	    } else if (monto >= 1000) {
+	        porcentaje = "10%";
+	        descuento = monto * 0.10;
+	    } else if (monto >= 500) {
+	        porcentaje = "6%";
+	        descuento = monto * 0.06;
+	    } else {
+	        porcentaje = "0%";
+	        descuento = 0;
+	    }
+
+	   
+	}
+	
+	void resultado() {
+	    if (monto <= 0) return;
+
+	    
+	    txtdescuento.setText(porcentaje);
+	    
+	    
+	   
+
+	    if (descuento > 0) {
+	        JOptionPane.showMessageDialog(this, "¡Descuento de " + porcentaje + " aplicado!");
+	    } else {
+	        JOptionPane.showMessageDialog(this, "Monto insuficiente para aplicar descuento.");
+	    }
 	}
 }
