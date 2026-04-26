@@ -399,7 +399,7 @@ public class DlgModificar extends JDialog implements ActionListener {
 		case 6:
 			mostrarDatos(ventanaOperaciones.codigo6, ventanaOperaciones.precio6, ventanaOperaciones.talla6,
 					ventanaOperaciones.stock6, ventanaOperaciones.descripcion6, ventanaOperaciones.color6,
-					ventanaOperaciones.provedor6);
+					ventanaOperaciones.proveedor6);
 			break;
 		case 7:
 			mostrarDatos(ventanaOperaciones.codigo7, ventanaOperaciones.precio7, ventanaOperaciones.talla7,
@@ -515,7 +515,7 @@ public class DlgModificar extends JDialog implements ActionListener {
 			ventanaOperaciones.stock6 = stock;
 			ventanaOperaciones.descripcion6 = descripcion;
 			ventanaOperaciones.color6 = color;
-			ventanaOperaciones.provedor6 = proveedor;
+			ventanaOperaciones.proveedor6 = proveedor;
 			break;
 		case 7:
 			ventanaOperaciones.codigo7 = codigo;

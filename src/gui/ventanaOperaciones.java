@@ -67,7 +67,7 @@ public class ventanaOperaciones extends JFrame implements ActionListener {
 	public static String talla6 = "S";
 	public static int stock6 = 45;
 	public static String color6 = "Verde";
-	public static String provedor6 = "Gamarra S.A.";
+	public static String proveedor6 = "Gamarra S.A.";
 
 	public static String codigo7 = "C007";
 	public static String descripcion7 = "Chaqueta de Mezclilla";

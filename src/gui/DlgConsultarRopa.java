@@ -354,7 +354,7 @@ public class DlgConsultarRopa extends JDialog implements ActionListener {
 			
 		} else if (cod.equalsIgnoreCase(ventanaOperaciones.codigo6)) {
 			mostrarDatos(ventanaOperaciones.descripcion6, ventanaOperaciones.precio6, ventanaOperaciones.talla6,
-					ventanaOperaciones.stock6, ventanaOperaciones.color6, ventanaOperaciones.provedor6);
+					ventanaOperaciones.stock6, ventanaOperaciones.color6, ventanaOperaciones.proveedor6);
 			
 		} else if (cod.equalsIgnoreCase(ventanaOperaciones.codigo7)) {
 			mostrarDatos(ventanaOperaciones.descripcion7, ventanaOperaciones.precio7, ventanaOperaciones.talla7,
