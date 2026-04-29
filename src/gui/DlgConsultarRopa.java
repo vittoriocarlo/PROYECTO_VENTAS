@@ -194,7 +194,7 @@ public class DlgConsultarRopa extends JDialog implements ActionListener {
 		contentPanel.add(panel);
 
 		panel_1 = new JPanel();
-		panel_1.setBounds(0, 0, 738, 33);
+		panel_1.setBounds(0, 0, 54, 33);
 		contentPanel.add(panel_1);
 		panel_1.setLayout(null);
 

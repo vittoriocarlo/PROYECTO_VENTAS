@@ -135,6 +135,14 @@ public class ventanaOperaciones extends JFrame implements ActionListener {
 	}
 
 	public ventanaOperaciones() {
+		
+		try {
+	        com.formdev.flatlaf.FlatDarkLaf.setup();
+	    } catch (Exception ex) {
+	        System.err.println("Error al aplicar FlatLaf en el constructor");
+	    }
+
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 833, 450);
 		setTitle("SISTEMA DE VENTA DE ROPA");

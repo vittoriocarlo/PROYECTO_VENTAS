@@ -114,10 +114,12 @@ public class DlgListar extends JDialog implements ActionListener {
 		
 		panelcerrar = new JPanel();
 		panelcerrar.setLayout(null);
-		panelcerrar.setBounds(0, 0, 54, 33);
+		panelcerrar.setBounds(716, 0, 54, 33);
 		panel.add(panelcerrar);
 		
 		lblNewLabel = new JLabel("X");
+		lblNewLabel.setBounds(0, 0, 54, 33);
+		panelcerrar.add(lblNewLabel);
 		lblNewLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel.setPreferredSize(new Dimension(40, 40));
@@ -125,7 +127,6 @@ public class DlgListar extends JDialog implements ActionListener {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Calibri Light", Font.PLAIN, 24));
 		lblNewLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel.setBounds(0, 0, 54, 33);
 		
 		lblNewLabel.addMouseListener(new java.awt.event.MouseAdapter() {
 		    @Override
@@ -157,7 +158,6 @@ public class DlgListar extends JDialog implements ActionListener {
 	        }
 	    });
 	    timer.start();
-		panelcerrar.add(lblNewLabel);
 		
 		
 	}

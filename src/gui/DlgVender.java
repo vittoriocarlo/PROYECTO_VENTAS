@@ -193,10 +193,12 @@ public class DlgVender extends JDialog implements ActionListener {
 		
 		panelcerrar = new JPanel();
 		panelcerrar.setLayout(null);
-		panelcerrar.setBounds(0, 0, 54, 33);
+		panelcerrar.setBounds(666, 0, 54, 33);
 		panel.add(panelcerrar);
 		
 		lblNewLabel_1 = new JLabel("X");
+		lblNewLabel_1.setBounds(0, 0, 54, 33);
+		panelcerrar.add(lblNewLabel_1);
 		lblNewLabel_1.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel_1.setPreferredSize(new Dimension(40, 40));
@@ -204,7 +206,6 @@ public class DlgVender extends JDialog implements ActionListener {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Calibri Light", Font.PLAIN, 24));
 		lblNewLabel_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel_1.setBounds(0, 0, 54, 33);
 		
 		lblNewLabel_1.addMouseListener(new java.awt.event.MouseAdapter() {
 		    @Override
@@ -236,7 +237,6 @@ public class DlgVender extends JDialog implements ActionListener {
 	        }
 	    });
 	    timer.start();
-		panelcerrar.add(lblNewLabel_1);
 		
 		txtcodigo = new JTextField();
 		txtcodigo.setColumns(10);
